@@ -2,14 +2,10 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Text from "../components/common/Text";
 import Icon from "../components/common/Icon";
+import Button from "../components/common/Button";
+import { onSignOut, ResetToSignedOut } from "../auth";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
 });
 
 class SettingsScreen extends React.Component {
@@ -19,9 +15,14 @@ class SettingsScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
     return (
-      <View style={styles.container}>
-        <Text>Settings</Text>
+      <View style={{ flex: 1, paddingVertical: 20 }}>
+        <Button
+          buttonStyle={{ backgroundColor: "#03A9F4" }}
+          text="SIGN OUT"
+          onPress={() => onSignOut().then(() => navigation.dispatch(ResetToSignedOut))}
+        />
       </View>
     );
   }

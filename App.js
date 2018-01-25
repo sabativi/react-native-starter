@@ -4,7 +4,8 @@ import { AppLoading, Asset, Font } from 'expo';
 import { ApolloClient } from "apollo-client";
 import { HttpLink, InMemoryCache } from "apollo-client-preset";
 import { ApolloProvider, graphql } from "react-apollo";
-import Router from "./app/router/index";
+import { createRootNavigator } from "./app/router/index";
+import { isSignedIn } from "./app/auth";
 import images from "./assets/images/index";
 import fonts from "./assets/fonts/index";
 
@@ -31,11 +32,18 @@ class App extends React.Component {
     super();
     this.state = {
       appIsReady: false,
+      signedIn: false,
+      checkedSignIn: false,
     };
     this._loadAsync = this._loadAsync.bind(this);
   }
   componentDidMount() {
     this._loadAsync();
+  }
+  componentWillMount() {
+    isSignedIn()
+      .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
+      .catch(err => alert("An error occurred"));
   }
   async _loadAsync() {
     const imageAssets = cacheImages(Object.values(images));
@@ -47,7 +55,9 @@ class App extends React.Component {
     }
   }
   render() {
-    if (!this.state.appIsReady) {
+    const { checkedSignIn, signedIn, appIsReady } = this.state;
+
+    if (!appIsReady || !checkedSignIn) {
       return <AppLoading 
         startAsync={this._loadAsync}
         onError={console.warn}
@@ -55,9 +65,11 @@ class App extends React.Component {
       />;
     }
 
+    const Layout = createRootNavigator(signedIn);
+
     return (
       <ApolloProvider client={client}>
-        <Router />
+        <Layout />
       </ApolloProvider>
     );
   }
