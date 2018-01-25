@@ -1,5 +1,18 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "name": "react-native-starter",
+    "description": "An opiniated starter",
+    "slug": "react-native-starter",
+    "sdkVersion": "25.0.0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./assets/icons/icon.png",
+    "loading": {
+      "icon": "./assets/icons/loading.png"
+    },
+    "ios": {
+      "supportsTablet": false
+    }
   }
 }
