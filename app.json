@@ -7,12 +7,24 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
+    "splash": {
+      "image": "./assets/icons/icon.png"
+    },
+    "packagerOpts": {
+      "assetExts": ["ttf", "mp4"]
+    },
     "icon": "./assets/icons/icon.png",
     "loading": {
       "icon": "./assets/icons/loading.png"
     },
     "ios": {
-      "supportsTablet": false
-    }
+      "supportsTablet": false,
+      "loadJSInBackgroundExperimental": true
+    },
+    "assetBundlePatterns": [
+      "assets/**",
+      "node_modules/react-navigation/src/**/*.png",
+      "node_modules/@expo/vector-icons/fonts/*.ttf"
+    ]
   }
 }
